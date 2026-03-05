@@ -1,0 +1,105 @@
+/* Contenedor principal estilo Software House / C-Cure */
+.device-sacs-container {
+  padding: 0;
+  background-color: #fff;
+  height: 100%;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+/* Título de sección estilo Header */
+.device-sacs-container h2 {
+  background-color: #84c1e0; /* Azul C-CURE idéntico a CCTV */
+  color: #003366;
+  margin: 0;
+  padding: 8px 15px;
+  font-size: 14px;
+  border-bottom: 1px solid #70aacc;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* La Tabla SACS */
+.device-sacs-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+/* Encabezados de columna */
+.device-sacs-table th {
+  background-color: #e0e0e0;
+  color: #333;
+  border: 1px solid #b0b0b0;
+  padding: 6px;
+  text-align: left;
+  font-weight: bold;
+}
+
+/* Celdas */
+.device-sacs-table td {
+  border: 1px solid #ccc;
+  padding: 0; /* Para que el textarea llene la celda */
+  color: #000;
+  background-color: #fff;
+}
+
+/* Texto no editable (ID, Código, Ubicación, etc.) */
+/* Aplicamos estilo grisáceo a la primera columna y celdas sin textarea */
+.device-sacs-table td:first-child, 
+.device-sacs-table td:not(:has(textarea)) {
+  padding: 4px 8px;
+  background-color: #f9f9f9;
+  color: #555;
+  font-size: 11px;
+}
+
+/* Textarea editable para Observaciones, Grupo, etc. */
+.editable-textarea {
+  width: 100%;
+  height: 100%;
+  min-height: 30px;
+  border: none;
+  padding: 6px 8px;
+  font-family: inherit;
+  font-size: 12px;
+  resize: vertical;
+  display: block;
+  box-sizing: border-box;
+  color: #000000 !important; 
+  background-color: transparent;
+}
+
+.editable-textarea:focus {
+  outline: 2px solid #0078d7;
+  background-color: #fff;
+}
+
+/* --- Estados de Guardado (Feedback visual) --- */
+
+.saving-cell {
+  background-color: #fff9c4 !important; /* Amarillo suave: Guardando... */
+  color: #000 !important;
+  border: none;
+  width: 100%;
+}
+
+.saved-cell {
+  background-color: #c8e6c9 !important; /* Verde éxito: Guardado */
+  color: #000 !important;
+  border: none;
+  width: 100%;
+  transition: background-color 0.5s ease;
+}
+
+.error-cell {
+  background-color: #ffcdd2 !important; /* Rojo error */
+  color: #b71c1c !important;
+  width: 100%;
+}
+
+/* Ajuste para scroll horizontal si hay muchas columnas */
+.table-wrapper {
+  overflow-x: auto;
+  border: 1px solid #ccc;
+  margin: 10px;
+}

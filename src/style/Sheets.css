@@ -1,0 +1,71 @@
+/* Sheets.css */
+.sheets-container {
+  padding: 0;
+  background-color: #fff;
+}
+
+/* Encabezados de Categoría (Fads, Sacs) estilo barra de C-CURE */
+.category-header {
+  background-color: #84c1e0; /* El azul más claro de la parte superior */
+  color: #003366;
+  padding: 6px 15px;
+  font-size: 14px;
+  font-weight: bold;
+  border-bottom: 1px solid #70aacc;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.grid-sheets {
+  display: flex;
+  flex-direction: column; /* Cambiamos de grid a lista */
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+/* Cada "Card" ahora es una fila de documento */
+.sheet-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 20px;
+  border-bottom: 1px solid #e0e0e0;
+  transition: background 0.2s;
+}
+
+.sheet-card:hover {
+  background-color: #e8f4ff;
+}
+
+.sheet-card h3 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: normal;
+  color: #333;
+  display: flex;
+  align-items: center;
+}
+
+/* Icono de documento simulado (como en la captura) */
+.sheet-card h3::before {
+  content: "📄"; /* O puedes usar un icono de librería */
+  margin-right: 10px;
+  font-size: 14px;
+}
+
+/* Botón View estilizado como botón de comando pequeño */
+.btn-view {
+  background: linear-gradient(to bottom, #ffffff 0%, #e0e0e0 100%);
+  border: 1px solid #999;
+  padding: 3px 12px;
+  font-size: 11px;
+  cursor: pointer;
+  color: #333;
+}
+
+.btn-view:hover {
+  border-color: #0078d7;
+  background: #cce8ff;
+}

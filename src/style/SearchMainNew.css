@@ -1,0 +1,74 @@
+/* SearchMain.css */
+
+/* Contenedor del Título de la sección */
+.h1-title {
+  background-color: var(--ccure-blue-header, #84c1e0);
+  color: #003366;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 6px 15px;
+  margin: 0;
+  border-bottom: 1px solid #70aacc;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  display: flex;
+  align-items: center;
+}
+
+.h1-title::before {
+  content: "🔍"; /* Icono de búsqueda estilo C-CURE */
+  margin-right: 8px;
+  font-size: 12px;
+}
+
+/* La barra de búsqueda estilo Toolbar */
+.search-bar {
+  background-color: #f0f0f0; /* Gris industrial */
+  padding: 8px 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid #a0a0a0;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+/* Label simulado */
+.search-bar::before {
+  content: "Search ID:";
+  font-size: 12px;
+  color: #333;
+}
+
+/* Input rectangular y sobrio */
+.search-bar input {
+  border: 1px solid #a0a0a0;
+  padding: 3px 8px;
+  font-size: 12px;
+  width: 200px;
+  outline: none;
+}
+
+.search-bar input:focus {
+  border-color: #0078d7;
+  background-color: #fff;
+}
+
+/* Botón con el degradado clásico de Windows/C-CURE */
+.search-bar button {
+  background: linear-gradient(to bottom, #ffffff 0%, #e0e0e0 100%);
+  border: 1px solid #999;
+  padding: 3px 15px;
+  font-size: 12px;
+  cursor: pointer;
+  color: #333;
+  min-width: 80px;
+}
+
+.search-bar button:hover {
+  background: #cce8ff;
+  border-color: #0078d7;
+}
+
+.search-bar button:active {
+  background: #b8d9eb;
+}
+

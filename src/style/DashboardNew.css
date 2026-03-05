@@ -1,0 +1,95 @@
+:root {
+  --ccure-dark-blue: #005a84;   /* Azul de las barras de título */
+  --ccure-bg-gray: #e6e6e6;     /* Fondo general de la aplicación */
+  --ccure-panel-bg: #ffffff;    /* Fondo de las tarjetas */
+  --ccure-border: #999999;      /* Bordes de los paneles */
+  --ccure-text-light: #ffffff;  /* Texto en barras oscuras */
+}
+
+/* Layout Principal */
+.dashboard-layout {
+  display: flex;
+  height: calc(100vh - 45px); /* Restamos la altura del header */
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+/* Sidebar Estilo */
+.sidebar {
+  width: 260px;
+  background-color: #f0f0f0;
+  border-right: 1px solid #a0a0a0;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  padding: 0%;
+}
+
+/* Secciones del Sidebar (Configuration, Personnel, etc.) */
+.sidebar-section {
+  background-color: #ffffff;
+  border-bottom: 1px solid #d0d0d0;
+  cursor: pointer;
+}
+
+.sidebar-header {
+  background-color: #005a84; /* El azul marino de la imagen */
+  color: white;
+  padding: 6px 10px;
+  font-size: 13px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sidebar-content {
+  margin: 2px;
+  width: 95%;
+  background-color: white;
+}
+
+.sidebar-content input {
+  /* Forzamos el fondo blanco */
+  background-color: #ffffff !important;
+  
+  /* Forzamos la letra negra para que sea legible */
+  color: #000000 !important;
+  
+  /* Estilo Borde definido y sin redondez excesiva */
+  border: 1px solid #005a84;
+  padding: 6px 10px;
+  width: 90%; 
+  outline: none;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Los items del menú (Dashboard, Sheets, etc.) */
+.sidebar-item {
+  padding: 5px 12px;
+  font-size: 13px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid transparent;
+}
+
+.sidebar-item:hover {
+  background-color: #cce8ff;
+  border: 1px solid #99d1ff;
+  width: 93%;
+}
+
+.sidebar-item.active {
+  background-color: #0078d7; /* Azul de selección activa */
+  color: white;
+  width: 93%;
+}
+
+/* Área de contenido a la derecha */
+.main-content {
+  flex-grow: 1;
+  overflow-y: auto;
+  background-color: #ffffff;
+  padding: 20px;
+}

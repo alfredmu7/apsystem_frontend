@@ -1,0 +1,91 @@
+/* Contenedor fondo (gris de fondo de sistema) */
+.splash-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #e9e9e9; /* Gris Windows clásico */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  transition: opacity 0.5s ease;
+}
+
+.splash-screen.fade-out {
+  opacity: 0;
+}
+
+/* El Cuadro Azul Central (Paleta C-CURE) */
+.splash-card {
+  background-color: #99d1ff; /* Azul profundo oficial */
+  width: 350px;
+  padding: 80px;
+  display: flex;
+  border-radius: 10px;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Contenedor del logo */
+.logo-container {
+  margin-bottom: 30px;
+  width: 100%;
+  
+}
+
+.splash-logo {
+  max-width: 300px;
+  height: auto;
+  /* Si tu logo es oscuro, esto lo hace resaltar en el cuadro azul */
+  filter: brightness(0) invert(1); 
+}
+
+/* Loader: Barra de progreso clásica */
+.loader-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modern-loader {
+  width: 100%;
+  height: 12px;
+  background-color: #004488; /* Azul un poco más claro para el fondo de la barra */
+  border: 1px solid #001122;
+  position: relative;
+  overflow: hidden;
+}
+
+/* El progreso animado */
+.modern-loader::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background-color: #84c1e0; /* El azul claro de C-CURE para el progreso */
+  box-shadow: 0 0 10px #84c1e0;
+  animation: progressMove 1.5s infinite ease-in-out;
+}
+
+/* Texto de carga */
+.loading-text {
+  margin-top: 15px;
+  color: #3d3d3d; /* Mismo azul claro */
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Animación de la barra */
+@keyframes progressMove {
+  0% { left: -60%; }
+  100% { left: 100%; }
+}

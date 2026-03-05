@@ -1,0 +1,79 @@
+/* Device.css */
+
+.device-page {
+  background-color: #fff;
+  height: 100%;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+/* Encabezado azul estilo Software House */
+.device-page h2 {
+  background-color: #84c1e0; 
+  color: #003366;
+  margin: 0;
+  padding: 10px 15px;
+  font-size: 14px;
+  font-weight: bold;
+  border-bottom: 1px solid #70aacc;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Tabla de datos */
+.device-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  table-layout: auto;
+}
+
+/* Cabeceras de la tabla */
+.device-table th {
+  background-color: #e0e0e0;
+  color: #000000; /* Texto negro */
+  border: 1px solid #b0b0b0;
+  padding: 8px;
+  text-align: left;
+  font-weight: 600;
+  position: sticky;
+  top: 0; /* Para que el encabezado no se mueva al hacer scroll */
+}
+
+/* Celdas de datos */
+.device-table td {
+  border: 1px solid #dcdcdc;
+  padding: 6px 10px;
+  color: #000000 !important; /* Forzamos letra negra para evitar el blanco */
+  white-space: nowrap;
+}
+
+/* Filas alternas (Zebra stripping) */
+.device-table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.device-table tbody tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+/* Efecto Hover al pasar el mouse por la fila */
+.device-table tbody tr:hover {
+  background-color: #cce8ff !important; /* Azul selección C-CURE */
+  cursor: default;
+}
+
+/* Estilo para el estado de carga */
+.loading-text {
+  padding: 20px;
+  font-family: 'Segoe UI', sans-serif;
+  color: #003366;
+  font-weight: bold;
+}
+
+/* Badge para la columna Trouble (opcional pero profesional) */
+.trouble-cell {
+  font-weight: bold;
+}
+.trouble-warning {
+  color: #d32f2f; /* Rojo si hay problema */
+}

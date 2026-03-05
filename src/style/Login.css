@@ -1,0 +1,85 @@
+/* Login.css */
+
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #e4e4e4; /* Fondo oscuro de sala de control */
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+.login-form {
+  background-color: #f0f0f0; /* Color gris de ventana de Windows clásica */
+  padding: 25px;
+  border: 1px solid #005a845d;
+  width: 350px;
+}
+
+.login-title {
+  margin: -25px -25px 20px -25px; /* Extiende el título al borde */
+  background-color: #005a84;
+  color: white;
+  padding: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.login-label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* INPUTS CORREGIDOS: Letra negra garantizada */
+.login-input {
+  margin-top: 5px;
+  padding: 6px;
+  border: 1px solid #7a7a7a;
+  background-color: #ffffff !important;
+  color: #000000 !important; /* Letra negra al escribir */
+  font-size: 13px;
+  outline: none;
+}
+
+.login-input:focus {
+  border-color: #0078d7;
+  background-color: #fff;
+}
+
+/* BOTÓN ESTILO SISTEMA */
+.login-button {
+  width: 100%;
+  padding: 8px;
+  background: linear-gradient(to bottom, #ffffff 0%, #e0e0e0 100%);
+  border: 1px solid #999;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.2s;
+}
+
+.login-button:hover:not(:disabled) {
+  background: #cce8ff;
+  border-color: #0078d7;
+}
+
+.login-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.login-error {
+  color: #d32f2f;
+  background-color: #ffcdd2;
+  padding: 8px;
+  font-size: 11px;
+  border: 1px solid #d32f2f;
+  margin-bottom: 15px;
+  text-align: center;
+}

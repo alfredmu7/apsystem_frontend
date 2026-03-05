@@ -1,0 +1,102 @@
+:root {
+  --ccure-blue-header: #84c1e0; /* El azul claro de la barra superior */
+  --ccure-dark-blue: #005a84;   /* El azul de las barras de título internas */
+  --ccure-bg-light: #f0f0f0;    /* Fondo de menús y botones */
+  --ccure-border: #a0a0a0;      /* Color de borde estándar */
+  --ccure-text: #333333;        /* Texto principal */
+  --ccure-hover: #cce8ff;       /* Azul claro al pasar el mouse */
+  --ccure-font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+/* Header.css */
+.header {
+  background: linear-gradient(to bottom, #b8d9eb 0%, #84c1e0 100%); /* Efecto cristalino */
+  border-bottom: 1px solid #555;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 15px;
+  height: 45px; /* Altura compacta estilo aplicación */
+  font-family: var(--ccure-font-family);
+}
+
+.header img {
+width: 130px;
+padding-top: 10px;
+margin: -25px;
+
+
+}
+
+/* Menú de navegación */
+.menu {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 2px; /* Espaciado mínimo estilo toolbar */
+}
+
+.menu li {
+  position: relative;
+}
+
+.menu li a, 
+.dropdown-title {
+  text-decoration: none;
+  color: var(--ccure-text);
+  font-size: 13px;
+  padding: 6px 12px;
+  display: block;
+  cursor: pointer;
+  border: 1px solid transparent; /* Para evitar saltos en hover */
+}
+
+/* Efecto de botón al pasar el mouse */
+.menu li a:hover, 
+.dropdown-title:hover {
+  background-color: var(--ccure-hover);
+  border: 1px solid #99d1ff;
+}
+
+/* Estilo de Menú Desplegable (Dropdown) */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  border: 1px solid var(--ccure-border);
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+  min-width: 160px;
+  z-index: 1000;
+  list-style: none;
+  padding: 2px;
+}
+
+.dropdown-menu li {
+  padding: 8px 12px;
+  font-size: 13px;
+  color: var(--ccure-text);
+  cursor: pointer;
+}
+
+.dropdown-menu li:hover {
+  background-color: #0078d7; /* Azul clásico de selección de Windows */
+  color: white;
+}
+
+/* Botones de Login / Logout */
+.btn-logout, .btn-login {
+  background: #e1e1e1;
+  color: #333333;
+  border: 1px solid var(--ccure-border);
+  padding: 4px 15px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-logout:hover, .btn-login:hover {
+  background: #d0d0d0;
+  border-color: #707070;
+}

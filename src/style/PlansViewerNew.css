@@ -1,0 +1,171 @@
+.plans-viewer {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #333; /* Fondo de consola de monitoreo */
+}
+
+.pdf-container {
+  flex-grow: 1;
+  overflow: auto;
+  position: relative;
+  padding: 50px; /* Margen para que el popup no toque los bordes del visor */
+  display: flex;
+  justify-content: center;
+}
+
+.pdf-wrapper {
+  position: relative; /* Base para el position absolute de marcas y popup */
+  background-color: #fff;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+  height: fit-content;
+}
+
+.highlights-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none; /* Deja pasar clicks al wrapper/popup */
+  z-index: 5;
+}
+
+/* El Marcador (Cuadrito de estado C-CURE) */
+.checkmark {
+  position: absolute;
+  pointer-events: auto; /* Permite click para abrir el popup */
+  cursor: pointer;
+  width: 14px;
+  height: 14px;
+  background-color: #00ff00; /* Color "Online" de Software House */
+  border: 2px solid #005a84;
+  box-shadow: 0 0 8px #00ff00;
+  transform: translate(-50%, -50%); /* Centrado exacto en la coordenada */
+  z-index: 10;
+}
+
+.checkmark:hover {
+  background-color: #d60303; /* Efecto highlight técnico */
+  box-shadow: 0 0 10px #d60303;
+}
+
+/* Estilo para el input de archivo inicial */
+.file-input-container {
+  margin: auto;
+  padding: 20px;
+  background: #f0f0f0;
+  border: 1px solid #005a84;
+  text-align: center;
+}
+
+/* Estilo para el cuadro de diálogo que aparece al dar click */
+.maintenance-popup-content { /* Asumiendo que esta es la clase del popup */
+  background: #f0f0f0;
+  border: 1px solid #005a84;
+  box-shadow: 4px 4px 0px rgba(0,0,0,0.2);
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 12px;
+}
+
+/* Este contenedor es el que el hook useMaintenancePopup posiciona con top/left */
+.maintenance-popup-wrapper {
+  position: absolute;
+  z-index: 100;
+  background-color: #f0f0f0;
+  border: 1px solid #005a84;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  min-width: 150px;
+  /* Desplazamos el popup un poco a la derecha del cuadrito verde para no taparlo */
+  transform: translate(15px, -50%); 
+  pointer-events: auto;
+}
+
+/* Cabecera del Popup estilo C-CURE */
+/* Contenedor Principal del Popup */
+.maintenance-popup-wrapper {
+  position: absolute;
+  z-index: 9999;
+  background-color: #f0f0f0;
+  border: 1px solid #005a84;
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.5);
+  min-width: 180px;
+  transform: translate(15px, -50%); /* Desplazado a la derecha del punto */
+  pointer-events: auto; /* IMPORTANTE: permite clics */
+}
+
+/* Cabecera Azul C-CURE */
+.maintenance-popup-header {
+  background-color: #005a84;
+  color: #ffffff;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: default;
+}
+
+.close-popup-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.close-popup-btn:hover {
+  color: #ffcccc;
+}
+
+/* Cuerpo y Contenido */
+.maintenance-popup-body {
+  padding: 12px;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+.popup-id-label {
+  margin: 0 0 10px 0;
+  font-size: 12px;
+  color: #333;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 5px;
+}
+
+.popup-actions-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Botones con estilo C-CURE (Degradado gris) */
+.popup-btn {
+  background: linear-gradient(to bottom, #ffffff 0%, #e0e0e0 100%);
+  border: 1px solid #999;
+  color: #333;
+  padding: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  outline: none;
+}
+
+.popup-btn:hover {
+  background: #cce8ff;
+  border-color: #0078d7;
+}
+
+.popup-btn:active {
+  background: #b8d9eb;
+}
+
+/* Variaciones sutiles opcionales */
+.btn-maintenance:hover {
+  border-left: 4px solid #28a745; /* Verde */
+}
+
+.btn-trouble:hover {
+  border-left: 4px solid #dc3545; /* Rojo */
+}

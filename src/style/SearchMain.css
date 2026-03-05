@@ -1,0 +1,59 @@
+/* Corregimos el título para que no sea blanco transparente */
+.h1-title {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #84c1e0; /* El azul de C-CURE */
+    color: #003366 !important; /* Azul marino oscuro para el título */
+    text-align: left;
+    padding: 6px 15px;
+    margin: 0;
+    font-size: 14px;
+    font-weight: bold;
+    border-bottom: 1px solid #70aacc;
+}
+
+/* ¡AQUÍ ESTABA EL ERROR! 
+   Agregamos el punto "." antes de search-bar 
+*/
+.search-bar input {
+    color: #000000 !important; /* Letra negra */
+    background-color: #ffffff !important; /* Fondo blanco */
+    border: 1px solid #999;
+    padding: 4px 8px;
+    font-size: 13px;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    border-radius: 0; 
+    outline: none;
+    display: inline-block;
+}
+
+/* Placeholder */
+.search-bar input::placeholder {
+    color: #666666 !important;
+    font-style: italic;
+}
+
+/* Contenedor de la barra para que no herede colores extraños */
+.search-bar {
+    background-color: #f0f0f0;
+    padding: 8px 15px;
+    border-bottom: 1px solid #a0a0a0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Botón Search */
+.search-bar button {
+    background: linear-gradient(to bottom, #ffffff 0%, #e0e0e0 100%);
+    border: 1px solid #999;
+    padding: 3px 15px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #000000 !important; 
+    cursor: pointer;
+}
+
+.search-bar button:hover {
+    background: #cce8ff;
+    border-color: #0078d7;
+}
