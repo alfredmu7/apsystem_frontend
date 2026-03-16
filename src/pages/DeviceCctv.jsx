@@ -1,138 +1,78 @@
 import { useEffect, useState } from "react";
-import { getCctvMaintenanceTable } from "../api/cctvMaintenance";
-import { updateRow } from "../api/updateRow";
+import { getCctvMaintenanceHistory } from "../api/cctvMaintenance"; // Asegúrate de apuntar al nuevo endpoint /history
 import "../style/DeviceCctv.css";
 
 export default function DeviceCctv() {
-  const nonEditable = ["FECHA MT 1", "FECHA MT 2", "CAMARA", "USUARIO"];
-  const [headers, setHeaders] = useState([]);
-  const [rows, setRows] = useState({});
-  const [saving, setSaving] = useState(null);
-  const [saved, setSaved] = useState(null);
-  const [error, setError] = useState(null);
+  const [registros, setRegistros] = useState([]);
+  const [loading, setLoading] = useState(true);
 
+  // Definimos las columnas que queremos mostrar basadas en tu tabla de Neon
+  const columns = [
+    { label: "Fecha", key: "fechaMantenimiento" },
+    { label: "ID Dispositivo", key: "dispositivoId" },
+    { label: "Técnico", key: "tecnico" },
+    { label: "Observaciones", key: "observaciones" },
+    { label: "Estado", key: "estado" }
+  ];
 
-
-  // Cargar tabla desde el backend al montar el componente
   useEffect(() => {
     loadTable();
   }, []);
 
- const loadTable = async () => {
-  const data = await getCctvMaintenanceTable();
-
-  setHeaders(data.headers);
-
-  if (Array.isArray(data.rows)) {
-    // si viene en array → normalizamos
-    const normalized = {};
-    data.rows.forEach(row => {
-      const id = row["ID"];
-      normalized[id] = row;
-    });
-    setRows(normalized);
-  } else {
-    // si ya viene como objeto → lo usamos tal cual
-    setRows(data.rows);
-  }
-};
-
-
-
-  // Actualizar estado local cuando escribes en textarea
-  const handleChange = (id, col, value) => {
-    setRows(prev => ({
-      ...prev,
-      [id]: {
-        ...prev[id],
-        [col]: value
-      }
-    }));
+  const loadTable = async () => {
+    try {
+      setLoading(true);
+      // Este endpoint debe llamar a /api/cctv/maintenance/history
+      const data = await getCctvMaintenanceHistory(); 
+      setRegistros(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error("Error cargando historial:", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  // Guardar en DB al presionar Enter
-  const handleEnterSave = async (e, id, field) => {
-  if (e.key !== "Enter") return;
-
-  e.preventDefault();
-
-  const value = e.target.value.trim(); // vacío permitido
-
-  // opcional: marcar que está guardando
-  setSaving({ id, field });
-
-
-  try {
-    await updateRow({
-      excelId: id,
-      values: { [field]: value === "" ? "" : value }
-    });
-
-    // actualizar UI local
-    setRows(prev => ({
-      ...prev,
-      [id]: { ...prev[id], [field]: value }
-    }));
-
-    // señal visual de guardado
-    setSaved({ id, field });
-
-    // quitar estado de "saving" luego de un tiempo
-    setTimeout(() => {
-      setSaved(null);
-    }, 300);
-
-  } catch (err) {
-    console.error("Error guardando:", err);
-    setError({ id, field });
-  } finally {
-    setSaving(null);
-  }
-};
+  if (loading) return <div className="p-4">Cargando registros de Neon...</div>;
 
   return (
     <div className="device-cctv-container">
-      <h2>CCTV Maintenance</h2>
+      <h2>Historial de Mantenimiento CCTV</h2>
 
       <table className="device-cctv-table">
         <thead>
           <tr>
-            <th>ID</th>
-            {headers.map(h => (
-              <th key={h}>{h}</th>
+            {columns.map(col => (
+              <th key={col.key}>{col.label}</th>
             ))}
           </tr>
         </thead>
 
         <tbody>
-          {Object.entries(rows).map(([id, cols]) => (
-            <tr key={id}>
-              <td>{id}</td>
-
-              {headers.map(h => (
-                <td key={h}>
-                  {nonEditable.includes(h) ? (
-                    cols[h] || "-"
-                  ) : (
-                    <textarea
-                      value={rows[id]?.[h] || ""}
-                      onChange={e => handleChange(id, h, e.target.value)}
-                      onKeyDown={e => handleEnterSave(e, id, h)}
-                      className={
-                        saving?.id === id && saving?.field === h
-                          ? "saving-cell"
-                          : saved?.id === id && saved?.field === h
-                          ? "saved-cell"
-                          : error?.id === id && error?.field === h
-                          ? "error-cell"
-                          : "editable-textarea"
-                      }
-                    />
-                  )}
+          {registros.length > 0 ? (
+            registros.map((reg) => (
+              <tr key={reg.id}>
+                <td>{new Date(reg.fechaMantenimiento).toLocaleString()}</td>
+                <td><strong>{reg.dispositivoId}</strong></td>
+                <td>{reg.tecnico}</td>
+                <td>
+                  <textarea 
+                    className="editable-textarea"
+                    value={reg.observaciones || ""} 
+                    readOnly // Por ahora, ya que es historial
+                  />
                 </td>
-              ))}
+                <td>
+                  <span className="status-badge">{reg.estado}</span>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={columns.length} style={{ textAlign: "center" }}>
+                No hay mantenimientos registrados aún.
+              </td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
     </div>

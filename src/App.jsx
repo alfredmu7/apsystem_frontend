@@ -5,15 +5,15 @@ import { useEffect, useState } from "react";
 import { SplashScreen } from "./components/SplashScreen.jsx";
 import { Sheets } from "./pages/Sheets";
 import Login from "./pages/Login.jsx";
-import Device from "./pages/Device.jsx";
 import DeviceCctv from "./pages/DeviceCctv";
 import Dashboard from "./pages/Dashboard.jsx";
 import CctvSearch from "./pages/CctvSearch.jsx";
 
 import "./style/SplashScreen.css";
-import FadsSearch from "./pages/fads/fadsSearch.jsx";
+import FadsSearch from "./pages/FadsSearch.jsx";
 import SacsSearch from "./pages/sacs/SacsSearch.jsx";
-import DeviceSacs from "./pages/sacs/DeviceSacs.jsx";
+import DeviceSacs from "../src/pages/sacs/DeviceSacs.jsx";
+import DeviceFads from "../src/pages/DeviceFads.jsx";
 
 function PrivateRoute({ children }) {
   const token = localStorage.getItem("token");
@@ -54,7 +54,7 @@ function AppWrapper() {
           <Route path="/id-search/cctv" element={<CctvSearch />} />
           <Route path="/sheets" element={<Sheets />} />
           <Route path="/tracking" element={<PrivateRoute><PlansViewer /></PrivateRoute>} />
-          <Route path="/devices/fads" element={<Device/>} />
+          <Route path="/devices/fads" element={<PrivateRoute><DeviceFads /></PrivateRoute>} />
           <Route path="/devices/sacs" element={<PrivateRoute><DeviceSacs /></PrivateRoute>} />
           <Route path="/devices/cctv" element={<PrivateRoute><DeviceCctv /></PrivateRoute>}/>
           <Route path="/profile" element={<PrivateRoute><h1>Profile</h1></PrivateRoute>} />

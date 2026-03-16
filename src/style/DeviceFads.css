@@ -1,14 +1,14 @@
-/* Contenedor principal - Igualado a CCTV */
-.device-sacs-container {
+/* Contenedor principal FADS */
+.device-fads-container {
   padding: 0;
   background-color: #fff;
   height: 100%;
   font-family: 'Segoe UI', Tahoma, sans-serif;
 }
 
-/* Título de sección estilo Header - Igualado a CCTV */
-.device-sacs-container h2 {
-  background-color: #84c1e0; /* Azul C-CURE */
+/* Título de sección estilo Header C-CURE */
+.device-fads-container h2 {
+  background-color: #84c1e0; 
   color: #003366;
   margin: 0;
   padding: 8px 15px;
@@ -16,15 +16,15 @@
   border-bottom: 1px solid #70aacc;
 }
 
-/* La Tabla - Igualada a CCTV */
-.device-sacs-table {
+/* La Tabla de Incendio */
+.device-fads-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 12px;
 }
 
-/* Encabezados de columna - Igualado a CCTV */
-.device-sacs-table th {
+/* Encabezados de columna */
+.device-fads-table th {
   background-color: #e0e0e0;
   color: #333;
   border: 1px solid #b0b0b0;
@@ -33,25 +33,23 @@
   font-weight: bold;
 }
 
-/* Celdas - Igualado a CCTV */
-.device-sacs-table td {
+/* Celdas generales */
+.device-fads-table td {
   border: 1px solid #ccc;
-  padding: 0; /* Mismo comportamiento para que el textarea llene la celda */
+  padding: 0; 
   color: #000;
   background-color: #fff;
 }
 
-/* Texto no editable (Item, ID, Fecha, etc) - Igualado a CCTV */
-/* Este selector asegura que las celdas sin textarea tengan el mismo padding y fondo */
-.device-sacs-table td:first-child, 
-.device-sacs-table td:not(:has(textarea)) {
+/* Texto no editable (ID, Fecha, Ubicación) */
+.device-fads-table td:not(:has(textarea)) {
   padding: 4px 8px;
   background-color: #f9f9f9;
   color: #555;
 }
 
-/* Textarea editable - Igualado a CCTV */
-.sacs-editable-textarea {
+/* Textarea editable para observaciones de FADS */
+.fads-editable-textarea {
   width: 100%;
   height: 100%;
   min-height: 30px;
@@ -62,34 +60,30 @@
   resize: vertical;
   display: block;
   box-sizing: border-box;
-  
-  /* COLOR DE LETRA QUE ESCRIBES */
   color: #000000 !important; 
   background-color: transparent;
 }
 
-.sacs-editable-textarea:focus {
+.fads-editable-textarea:focus {
   outline: 2px solid #0078d7;
   background-color: #fff;
 }
 
-/* Estados de Guardado - Igualado a CCTV */
-.saving-sacs {
+/* Estados de Guardado en Neon */
+.saving-fads {
   background-color: #fff9c4 !important; /* Amarillo suave */
   color: #000 !important;
-  border: none;
   width: 100%;
 }
 
-.saved-sacs {
+.saved-fads {
   background-color: #c8e6c9 !important; /* Verde éxito */
   color: #000 !important;
-  border: none;
   width: 100%;
   transition: background-color 0.5s ease;
 }
 
-.error-sacs {
+.error-fads {
   background-color: #ffcdd2 !important; /* Rojo error */
   color: #b71c1c !important;
   width: 100%;

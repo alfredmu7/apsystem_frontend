@@ -1,152 +1,138 @@
 import { useState } from "react";
-import { getIdInfo, addSacsMaintenance, downloadOtrosi7Excel } from "../../api/sacsMaintenance";
+import { useNavigate } from "react-router-dom"; 
+import "../../style/Mantenimiento.css"; 
+import { getSacsByDoorId, applySacsMaintenance } from "../../api/sacsMaintenance";
 
 export default function SacsSearch() {
-  const [id, setId] = useState("");
-  const [foundId, setFoundId] = useState("");
-  const [data, setData] = useState([]);
-  const [error, setError] = useState("");
-  const [showWordMenu, setShowWordMenu] = useState(false);
-  const [showExcelMenu, setShowExcelMenu] = useState(false);
+  // --- ESTADOS ---
+  const [id, setId] = useState("");              // ID que escribe el usuario
+  const [deviceData, setDeviceData] = useState(null); // Datos del inventario (Neon)
+  const [loading, setLoading] = useState(false);  
+  const [error, setError] = useState("");         
+  
+  const navigate = useNavigate(); 
 
+  // --- LÓGICA DE BÚSQUEDA ---
   const buscarId = async () => {
-    setError("");
-    setData([]);
-    setFoundId("");
     if (!id.trim()) return;
+    
+    setLoading(true); 
+    setDeviceData(null);
+    setError("");
 
     try {
-      const response = await getIdInfo(id.trim()); 
-      if (response.data && response.data.length > 0) {
-        setData(response.data);
-        setFoundId(id.trim());
+      const response = await getSacsByDoorId(id.trim());
+      const data = Array.isArray(response) ? response[0] : response;
+      
+      if (data) {
+        setDeviceData(data);
       } else {
-        setError("ID not found in SACS database");
+        setError("No se encontró ningún dispositivo SACS con ese ID.");
       }
     } catch (err) {
-      setError("Error: " + (err.response?.status === 404 ? "Not Found" : "Server Error"));
+      console.error("Error en búsqueda SACS:", err);
+      setError("Error al conectar con el servidor SACS.");
+    } finally {
+      setLoading(false); 
     }
   };
 
+  // --- LÓGICA DE MANTENIMIENTO ---
   const handleMaintenance = async () => {
-    try {
-      await addSacsMaintenance(foundId);
-      alert("Maintenance recorded successfully");
-      setFoundId("");
-      setId("");
-      setData([]);
-    } catch (e) {
-      alert(e.response?.status === 409 ? "Maintenance already exists" : "Error saving maintenance");
-    }
-  };
+    if (!deviceData) return;
 
-  // ESTA FUNCIÓN DEBE ESTAR AQUÍ AFUERA (No dentro de handleMaintenance)
-  const handleDownloadExcel = async (type) => {
-    setShowExcelMenu(false); 
-    
-    if (type === 'otrosi7') {
-      try {
-        await downloadOtrosi7Excel();
-      } catch (err) {
-        if (err.response?.status === 404) {
-          alert("Aviso: No hay registros previos. Debes aplicar al menos un mantenimiento para generar el reporte.");
-        } else {
-          alert("Error al intentar descargar el reporte.");
-        }
-      }
-    } else {
-      alert("Este reporte aún no está implementado.");
+    setLoading(true);
+    try {
+      // Capturamos todos los datos necesarios del objeto deviceData
+      const payload = {
+        id: deviceData.id_puerta || deviceData.idPuerta || id,
+        item: deviceData.item || "",
+        tipo_de_equipo: deviceData.tipo_de_equipo || deviceData.tipoDeEquipo || "SACS",
+        observation: "Mantenimiento Preventivo SACS",
+        technician: "Técnico ApSystem"
+      };
+
+      // Enviamos el objeto completo a la API
+      await applySacsMaintenance(payload); 
+      
+      alert(`Mantenimiento registrado con éxito para: ${payload.id}`);
+      
+      setDeviceData(null);
+      setId("");
+      
+
+    } catch (e) {
+      console.error("Error en mantenimiento SACS:", e);
+      alert("No se pudo guardar el registro de mantenimiento.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="id-container">
-      <h2>ID Search - SACS (Access Control)</h2>
-
+      <h2>Buscador SACS - Gestión de Mantenimiento</h2>
+      
+      {/* Caja de Búsqueda */}
       <div className="id-search-box">
-        <input
-          type="text"
-          placeholder="Enter ID (ej. 2077-03, ZN GP10,D16)"
-          value={id}
+        <input 
+          type="text" 
+          placeholder="Ingrese ID (Ej: 0-16-01)" 
+          value={id} 
           onChange={(e) => setId(e.target.value)}
-          onKeyPress={(e) => e.key === 'Enter' && buscarId()}
+          onKeyDown={(e) => e.key === 'Enter' && buscarId()}
+          disabled={loading}
         />
-        <button onClick={buscarId}>Search</button>
+        <button onClick={buscarId} disabled={loading || !id.trim()}>
+          {loading ? "Buscando..." : "Consultar"}
+        </button>
       </div>
 
-      <div className="id-search-box" style={{ borderTop: 'none' }}>
-        
-        {/* DROPDOWN EXCEL - Corregido */}
-        <div style={{ position: 'relative', display: 'inline-block' }}>
-          <button onClick={() => { setShowExcelMenu(!showExcelMenu); setShowWordMenu(false); }}>
-            Download Excel Report ▾
-          </button>
+      {/* Mensaje de Error */}
+      {error && <div className="error-message" style={{ color: 'red', margin: '10px 0' }}>{error}</div>}
 
-          {showExcelMenu && (
-            <div className="word-dropdown">
-              <button onClick={() => handleDownloadExcel('otrosi7')}>
-                rms sacs otrosi 7 doors Report</button>
-              <button onClick={() => setShowExcelMenu(false)}>rms sacs otrosi 20 doors Report</button>
-              <button onClick={() => setShowExcelMenu(false)}>rms sacs buttons panic Report</button>
-              <button onClick={() => setShowExcelMenu(false)}>rms sacs ck report</button>
-            </div>
-          )}
-        </div>
-
-        {/* DROPDOWN WORD */}
-        <div style={{ position: 'relative', display: 'inline-block' }}>
-          <button onClick={() => { setShowWordMenu(!showWordMenu); setShowExcelMenu(false); }}>
-            Download Word Report ▾
-          </button>
-
-          {showWordMenu && (
-            <div className="word-dropdown">
-              <button onClick={() => setShowWordMenu(false)}>Otrosi 7 Doors Report</button>
-              <button onClick={() => setShowWordMenu(false)}>Otrosi 20 Report</button>
-              <button onClick={() => setShowWordMenu(false)}>Panic Buttons Report</button>
-              <button onClick={() => setShowWordMenu(false)}>ck ccu rcu ipc Report</button>
-            </div>
-          )}
-        </div>
-
-        {foundId && (
-          <button 
-            className="maintenance-btn-active" 
-            onClick={handleMaintenance}
-          >
-            Apply Maintenance
-          </button>
-        )}
-      </div>
-
-      {error && <p className="error">{error}</p>}
-
-      {data.length > 0 && (
+      {/* Tabla de Resultados */}
+      {deviceData && (
         <div className="results-container">
-          <h3>Technical Information of the Device: {foundId}</h3>
+          <h3>Información del Dispositivo (Neon DB)</h3>
           <table className="results-table">
             <thead>
               <tr>
-                <th style={{ width: '35%' }}>Property</th>
-                <th>Value</th>
+                <th>Parámetro</th>
+                <th>Valor Actual</th>
               </tr>
             </thead>
             <tbody>
-              {[
-                "ITEM", "CODIGO", "ID PUERTA", "FECHA MANTENIMIENTO I", 
-                "FECHA MANTENIMIENTO II", "GRUPO", "UBICACIÓN", "CAMARA", 
-                "RESPONSABLE A CARGO", "TIPO DE EQUIPO", "OBSERVACIONES"
-              ].map((colName) => {
-                const item = data.find(d => d.columna.trim() === colName);
-                return (
-                  <tr key={colName}>
-                    <td><strong>{colName}</strong></td>
-                    <td>{item ? (item.valor || "---") : "---"}</td>
-                  </tr>
-                );
-              })}
+              <tr>
+                <td><strong>Item</strong></td>
+                <td>{deviceData.item || "N/A"}</td>
+              </tr>
+              <tr>
+                <td><strong>ID Puerta</strong></td>
+                <td>{deviceData.id_puerta || deviceData.idPuerta || id}</td>
+              </tr>
+              <tr>
+                <td><strong>Ubicación</strong></td>
+                <td>{deviceData.ubicacion || "N/A"}</td>
+              </tr>
+              <tr>
+                <td><strong>Tipo de Equipo</strong></td>
+                <td>{deviceData.tipo_de_equipo || deviceData.tipoDeEquipo || "SACS"}</td>
+              </tr>
             </tbody>
           </table>
+          
+          {/* Botón de Acción */}
+          <div className="actions-bar" style={{ marginTop: '20px' }}>
+            <button 
+              className="btn-execute"
+              onClick={handleMaintenance}
+              disabled={loading}
+              
+            >
+              {loading ? "Guardando..." : "Confirmar Mantenimiento"}
+            </button>
+          </div>
         </div>
       )}
     </div>
