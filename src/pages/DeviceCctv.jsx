@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
-import { getCctvMaintenanceHistory } from "../api/cctvMaintenance"; // Asegúrate de apuntar al nuevo endpoint /history
+import { getCctvMaintenanceHistory } from "../api/cctvMaintenance"; 
 import "../style/DeviceCctv.css";
 
 export default function DeviceCctv() {
   const [registros, setRegistros] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Definimos las columnas que queremos mostrar basadas en tu tabla de Neon
+  // Columnas simplificadas (sin observaciones ni acciones)
   const columns = [
     { label: "Fecha", key: "fechaMantenimiento" },
     { label: "ID Dispositivo", key: "dispositivoId" },
     { label: "Técnico", key: "tecnico" },
-    { label: "Observaciones", key: "observaciones" },
     { label: "Estado", key: "estado" }
   ];
 
@@ -22,7 +21,6 @@ export default function DeviceCctv() {
   const loadTable = async () => {
     try {
       setLoading(true);
-      // Este endpoint debe llamar a /api/cctv/maintenance/history
       const data = await getCctvMaintenanceHistory(); 
       setRegistros(Array.isArray(data) ? data : []);
     } catch (err) {
@@ -51,25 +49,21 @@ export default function DeviceCctv() {
           {registros.length > 0 ? (
             registros.map((reg) => (
               <tr key={reg.id}>
-                <td>{new Date(reg.fechaMantenimiento).toLocaleString()}</td>
+                {/* Formateo de fecha para que sea más legible */}
+                <td>{new Date(reg.fechaMantenimiento).toLocaleDateString()}</td>
                 <td><strong>{reg.dispositivoId}</strong></td>
                 <td>{reg.tecnico}</td>
                 <td>
-                  <textarea 
-                    className="editable-textarea"
-                    value={reg.observaciones || ""} 
-                    readOnly // Por ahora, ya que es historial
-                  />
-                </td>
-                <td>
-                  <span className="status-badge">{reg.estado}</span>
+                  <span className={`status-badge ${reg.estado?.toLowerCase()}`}>
+                    {reg.estado}
+                  </span>
                 </td>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan={columns.length} style={{ textAlign: "center" }}>
-                No hay mantenimientos registrados aún.
+              <td colSpan={columns.length} style={{ textAlign: "center", padding: "20px", color: "#666" }}>
+                No hay mantenimientos registrados aún en la base de datos.
               </td>
             </tr>
           )}
